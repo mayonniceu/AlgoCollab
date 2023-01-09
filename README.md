@@ -6,7 +6,7 @@ Scrabble Game
 #Keeps track of the score-worth of each letter-tile.
 LETTER_VALUES = {"A": 1,
                  "B": 3,
-                 "C": 3,
+                 "C": 4,
                  "D": 2,
                  "E": 1,
                  "F": 4,
