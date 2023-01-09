@@ -29,7 +29,7 @@ LETTER_VALUES = {"A": 3,
                  "W": 4,
                  "X": 3,
                  "Y": 4,
-                 "Z": 10,}
+                 "Z": 10}
 class Tile:
     """
     Class that allows for the creation of a tile. Initializes using an uppercase string of one letter,
