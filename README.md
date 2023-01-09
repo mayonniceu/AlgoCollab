@@ -4,33 +4,33 @@ from random import shuffle
 Scrabble Game
 """
 #Keeps track of the score-worth of each letter-tile.
-LETTER_VALUES = {"A": 1,
+LETTER_VALUES = {"A": 5,
                  "B": 3,
                  "C": 3,
                  "D": 2,
-                 "E": 1,
+                 "E": 5,
                  "F": 4,
                  "G": 2,
                  "H": 4,
-                 "I": 1,
-                 "J": 1,
+                 "I": 5,
+                 "J": 4,
                  "K": 5,
-                 "L": 1,
+                 "L": 3,
                  "M": 3,
-                 "N": 1,
-                 "O": 1,
+                 "N": 3,
+                 "O": 5,
                  "P": 3,
                  "Q": 10,
-                 "R": 1,
-                 "S": 1,
-                 "T": 1,
-                 "U": 1,
+                 "R": 4,
+                 "S": 4,
+                 "T": 3,
+                 "U": 5,
                  "V": 4,
                  "W": 4,
                  "X": 8,
                  "Y": 4,
-                 "Z": 10,
-                 "#": 0}
+                 "Z": 10,}
+
 
 class Tile:
     """
@@ -84,9 +84,9 @@ class Bag:
         self.add_to_bag(Tile("J", LETTER_VALUES), 9)
         self.add_to_bag(Tile("K", LETTER_VALUES), 1)
         self.add_to_bag(Tile("L", LETTER_VALUES), 4)
-        self.add_to_bag(Tile("M", LETTER_VALUES), 2)
+        self.add_to_bag(Tile("M", LETTER_VALUES), 3)
         self.add_to_bag(Tile("N", LETTER_VALUES), 6)
-        self.add_to_bag(Tile("O", LETTER_VALUES), 8)
+        self.add_to_bag(Tile("O", LETTER_VALUES), 9)
         self.add_to_bag(Tile("P", LETTER_VALUES), 2)
         self.add_to_bag(Tile("Q", LETTER_VALUES), 1)
         self.add_to_bag(Tile("R", LETTER_VALUES), 6)
@@ -98,7 +98,7 @@ class Bag:
         self.add_to_bag(Tile("X", LETTER_VALUES), 1)
         self.add_to_bag(Tile("Y", LETTER_VALUES), 2)
         self.add_to_bag(Tile("Z", LETTER_VALUES), 1)
-        self.add_to_bag(Tile("#", LETTER_VALUES), 2)
+
         shuffle(self.bag)
 
     def take_from_bag(self):
@@ -269,16 +269,10 @@ class Word:
 
         current_board_ltr = ""
         needed_tiles = ""
-        blank_tile_val = ""
 
         #Assuming that the player is not skipping the turn:
         if self.word != "":
 
-            #Allows for players to declare the value of a blank tile.
-            if "#" in self.word:
-                while len(blank_tile_val) != 1:
-                    blank_tile_val = input("Please enter the letter value of the blank tile: ")
-                self.word = self.word[:word.index("#")] + blank_tile_val.upper() + self.word[(word.index("#")+1):]
 
             #Reads in the board's current values under where the word that is being played will go. Raises an error if the direction is not valid.
             if self.direction == "right":
@@ -307,10 +301,6 @@ class Word:
                 elif current_board_ltr[i] != self.word[i]:
                     print("Current_board_ltr: " + str(current_board_ltr) + ", Word: " + self.word + ", Needed_Tiles: " + needed_tiles)
                     return "The letters do not overlap correctly, please choose another word."
-
-            #If there is a blank tile, remove it's given value from the tiles needed to play the word.
-            if blank_tile_val != "":
-                needed_tiles = needed_tiles[needed_tiles.index(blank_tile_val):] + needed_tiles[:needed_tiles.index(blank_tile_val)]
 
             #Ensures that the word will be connected to other words on the playing board.
             if (round_number != 1 or (round_number == 1 and players[0] != self.player)) and current_board_ltr == " " * len(self.word):
@@ -470,7 +460,7 @@ def end_game():
     #Forces the game to end when the bag runs out of tiles.
     global players
     highest_score = 0
-    winning_player = ""
+    winning_player = " "
     for player in players:
         if player.get_score > highest_score:
             highest_score = player.get_score()
